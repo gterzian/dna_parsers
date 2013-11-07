@@ -11,14 +11,14 @@ def process_seq(gen, current_line):
             d['seq'].append(next_line)
     yield d
   
-def process_file(reader, filter):
+def process_file(reader):
     for line in reader:  
         if line[0] == ">":
             yield process_seq(reader, line)
            
-def parse_fasta(file_name, exclude):
+def parse_fasta(file_name):
     reader = read_lines(file_name)
-    sequences_processors = process_file(reader, exclude)
+    sequences_processors = process_file(reader)
     for processor in sequences_processors:
         for seq in processor:
             yield seq
