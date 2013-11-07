@@ -11,5 +11,4 @@ parser.add_argument('--files', type=str, metavar='Names', nargs='+',
 file_name = parser.parse_args().files[0]
 for seq in parse_file(file_name):
     print 'META INFO ==> %s' % seq['meta']
-    print 'Sequence ==> %s ...' % ' '.join(seq['seq'][0:10])
-    print 'Error ==> %s' % seq['error']
+    print 'Sequence ==> %s ...' %  seq['seq']

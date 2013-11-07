@@ -1,24 +1,23 @@
-from utils import sequence_data, read_lines    
+from utils import read_lines  
 
 
-def process_seq(gen, current_line):
-    with sequence_data(meta=None, seq=list(), error=None) as d:
-        d['meta'] = current_line[1:]
-        next_line = next(gen)
-        if next_line[0] == ">":
-            process_seq(gen, next_line)
-        else:
-            d['seq'].append(next_line)
-    yield d
-  
 def process_file(reader):
     for line in reader:  
         if line[0] == ">":
-            yield process_seq(reader, line)
+            yield True, line[1:]
+        else:
+            yield False, line
            
 def parse_fasta(file_name):
     reader = read_lines(file_name)
-    sequences_processors = process_file(reader)
-    for processor in sequences_processors:
-        for seq in processor:
-            yield seq
+    seqs = []
+    for new_seq, line in process_file(reader):
+        if new_seq:
+            d = dict(meta=None, seq=list(),)
+            d['meta'] = line
+            seqs.append(d)         
+        else:      
+            seqs[-1]['seq'].append(line)
+    for s in seqs:
+        yield s
+    
