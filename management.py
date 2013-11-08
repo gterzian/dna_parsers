@@ -5,11 +5,11 @@ from parsers import parse_files
 
 
 #setting up the command line parser
-parser = argparse.ArgumentParser(description='Process some files.')
-parser.add_argument('--files', type=str, metavar='Name', nargs='+', 
+arg_parser = argparse.ArgumentParser(description='Process some files.')
+arg_parser.add_argument('--files', type=str, metavar='Name', nargs='+', 
                        help='the name of the DNA file')
 
-file_names = parser.parse_args().files
+file_names = arg_parser.parse_args().files
 
 for file_name, parser in parse_files(file_names):
     print 
