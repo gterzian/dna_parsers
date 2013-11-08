@@ -1,8 +1,5 @@
 from fasta import parse_fasta
 
-'''note: use a data structure as context for the parsing code, allowing you to add some details as you come across them in the parsing and allowing for 
-graceful exception handling. Either use a class with context management capabilities, or use a context manager function that would yield a named tuple and return
-it with all info after parsing'''
 
 def parse_file(file_name):
     name, ext = file_name.split('.')
