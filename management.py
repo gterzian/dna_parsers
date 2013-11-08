@@ -17,5 +17,6 @@ for file_name, parser in parse_files(file_names):
     for seq in islice(parser, 0, 3):
         print 'META INFO ==> %s' % seq['meta']
         print 'Sequence ==> %s(...)' % ''.join(islice(seq['seq'], 0, 5))
-        print 'PARSING ERRORS ==> %s' % ''.join(seq['errors'])
+        if seq['errors']:
+            print 'PARSING ERRORS ==> %s' % ''.join(seq['errors'])
     print "FOUND %s more sequences in %s" % (len(list(parser)[3:]), file_name)
