@@ -21,20 +21,20 @@ create_seq_dict = lambda : dict(meta=None, seq=list(), errors=list())
            
 def parse_fasta(file_name):
     reader = read_lines(file_name)
-    seqs = list()
+    seq_list = list()
     for new_seq, line in process_file(reader):
         if new_seq:
             seq = create_seq_dict()
             seq['meta'] = line[1:]
-            seqs.append(seq)          
+            seq_list.append(seq)          
         else:
             try:      
-                seqs[-1]['seq'].append(line)
+                seq_list[-1]['seq'].append(line)
             except IndexError:
                 seq = create_seq_dict()
                 seq['errors'].append(ERRORS['no_meta_info'])#note, this only catches a lack of meta for the first seq in the file  
                 seq['seq'].append(line)
-                seqs.append(seq)
-    for s in imap(process_seq, seqs):
+                seq_list.append(seq)
+    for s in imap(process_seq, seq_list):
         yield s
     
