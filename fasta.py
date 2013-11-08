@@ -1,39 +1,39 @@
-from utils import read_lines  
+from utils import read_lines, read_fasta_seqs
 from itertools import imap, chain, ifilter
+from string import split
 
-
-ERRORS = dict(no_meta_info='No Meta Info Found')
+ERRORS = dict(no_meta_info='No Meta Info Found', no_sequence='No Sequence Info Found')
 EXCLUDE = ('#', '@', '*')
 
-def process_file(reader):
+def process_lines(reader):
     for line in reader:  
         if ">" in line:
             yield True, line
         else:
             yield False, line
             
-def process_seq(s):
-    s['seq'] = ifilter(lambda x: x not in EXCLUDE, ''.join(chain(s['seq'])))
+def filter_sequence(s):
+    seq_str = ''.join(chain(s['seq']))
+    s['seq'] = ifilter(lambda x: x not in EXCLUDE, seq_str)
+    if not seq_str:
+        s['errors'].append(ERRORS['no_sequence'])
+    if not s['meta']:
+        s['errors'].append(ERRORS['no_meta_info'])
     return s
     
 create_seq_dict = lambda : dict(meta=None, seq=list(), errors=list())
-           
+
+def process_sequence(seq):
+    lines = split(seq, '\n')
+    data = create_seq_dict()
+    data['meta'] = lines[0]
+    data['seq'] = lines[1:]
+    return data
+    
 def parse_fasta(file_name):
-    reader = read_lines(file_name)
-    seq_list = list()
-    for new_seq, line in process_file(reader):
-        if new_seq:
-            seq = create_seq_dict()
-            seq['meta'] = line[1:]
-            seq_list.append(seq)          
-        else:
-            try:      
-                seq_list[-1]['seq'].append(line)
-            except IndexError:
-                seq = create_seq_dict()
-                seq['errors'].append(ERRORS['no_meta_info'])#note, this only catches a lack of meta for the first seq in the file  
-                seq['seq'].append(line)
-                seq_list.append(seq)
-    for s in imap(process_seq, seq_list):
-        yield s
+    seqs = read_fasta_seqs(file_name)
+    seqs_data = imap(process_sequence, seqs)
+    for clean_seq in imap(filter_sequence, seqs_data):
+        yield clean_seq
+           
     
