@@ -1,5 +1,5 @@
 from utils import read_lines  
-from itertools import imap, chain
+from itertools import imap, chain, ifilter
 
 
 def process_file(reader):
@@ -10,7 +10,9 @@ def process_file(reader):
             yield False, line
             
 def process_seq(s):
-    s['seq'] = ''.join(chain(s['seq']))
+    exclude = ['#', '@', '*']
+    seq = ''.join(chain(s['seq']))
+    s['seq'] = ifilter(lambda x: x not in exclude, seq)
     return s
            
 def parse_fasta(file_name):
