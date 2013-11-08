@@ -30,9 +30,9 @@ def parse_fasta(file_name):
                 seqs[-1]['seq'].append(line.strip())
             except IndexError:
                 d = dict(meta=None, seq=list(), errors=list())
-                d['errors'].append(ERRORS['no_meta_info'])
+                d['errors'].append(ERRORS['no_meta_info'])#note, this only catches a lack of meta for the first seq in the file
                 seqs.append(d)
-                seqs[-1]['seq'].append(line.strip())
+                seqs[-1]['seq'].append(line)
     for s in imap(process_seq, seqs):
         yield s
     
