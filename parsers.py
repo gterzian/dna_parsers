@@ -13,5 +13,7 @@ def parse_file(file_name):
         raise(IOError("sorry no support for %s files yet" % ext))
 
 
-                                        
+def parse_files(file_names):
+    for name in file_names:
+        yield name, parse_file(name)                                        
 
