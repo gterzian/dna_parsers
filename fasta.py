@@ -2,8 +2,9 @@ from utils import read_lines, read_fasta_seqs
 from itertools import imap, chain, ifilter
 from string import split
 
-ERRORS = dict(no_meta_info='No Meta Info Found', no_sequence='No Sequence Info Found')
+ERRORS = dict(no_meta_info='No Meta Info Found', no_sequence='No Sequence Info Found', meta_contains_dna='The Meta Info Seems to Include DNA')
 EXCLUDE = ('#', '@', '*')
+DNA = ('G', 'C', 'A', 'T')
 
 def filter_sequence(s):
     seq_str = ''.join(chain(s['seq']))
@@ -12,6 +13,8 @@ def filter_sequence(s):
         s['errors'].append(ERRORS['no_sequence'])
     if not s['meta']:
         s['errors'].append(ERRORS['no_meta_info'])
+    if [i for i in s['meta'] if i in DNA]:
+        s['errors'].append(ERRORS['meta_contains_dna'])
     return s
     
 create_seq_dict = lambda : dict(meta=None, seq=list(), errors=list())
