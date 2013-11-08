@@ -15,6 +15,8 @@ def process_file(reader):
 def process_seq(s):
     s['seq'] = ifilter(lambda x: x not in EXCLUDE, ''.join(chain(s['seq'])))
     return s
+    
+line_into_seq = lambda line, seq: seq['seq'].append(line)
            
 def parse_fasta(file_name):
     reader = read_lines(file_name)
@@ -26,12 +28,12 @@ def parse_fasta(file_name):
             seqs.append(d)         
         else:
             try:      
-                seqs[-1]['seq'].append(line.strip())
+                line_into_seq(line, seqs[-1])
             except IndexError:
                 d = dict(meta=None, seq=list(), errors=list())
                 d['errors'].append(ERRORS['no_meta_info'])#note, this only catches a lack of meta for the first seq in the file
                 seqs.append(d)
-                seqs[-1]['seq'].append(line)
+                line_into_seq(line, seqs[-1])
     for s in imap(process_seq, seqs):
         yield s
     
