@@ -1,5 +1,5 @@
 import argparse
-import itertools
+from itertools import islice
 
 from parsers import parse_files
 
@@ -13,7 +13,7 @@ file_names = parser.parse_args().files
 
 for file_name, parser in parse_files(file_names):
     print 'RESULTS FROM %s ==>' % file_name
-    for seq in itertools.islice(parser, 0, 3):
+    for seq in islice(parser, 0, 3):
         print 'META INFO ==> %s' % seq['meta']
-        print 'Sequence ==> %s(...)' % ''.join(itertools.islice(seq['seq'], 0, 5))
+        print 'Sequence ==> %s(...)' % ''.join(islice(seq['seq'], 0, 5))
     print "FOUND %s more sequences in %s" % (len(list(parser)[3:]), file_name)
