@@ -12,7 +12,8 @@ parser.add_argument('--files', type=str, metavar='Name', nargs='+',
 file_names = parser.parse_args().files
 
 for file_name, parser in parse_files(file_names):
-    print 'RESULTS FROM %s ==>' % file_name
+    print 
+    print 'FIRST 3 RESULTS FROM %s ==>' % file_name
     for seq in islice(parser, 0, 3):
         print 'META INFO ==> %s' % seq['meta']
         print 'Sequence ==> %s(...)' % ''.join(islice(seq['seq'], 0, 5))
