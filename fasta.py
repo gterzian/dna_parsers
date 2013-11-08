@@ -1,4 +1,5 @@
 from utils import read_lines  
+from itertools import imap, chain
 
 
 def process_file(reader):
@@ -7,6 +8,10 @@ def process_file(reader):
             yield True, line[1:]
         else:
             yield False, line
+            
+def process_seq(s):
+    s['seq'] = ''.join(chain(s['seq']))
+    return s
            
 def parse_fasta(file_name):
     reader = read_lines(file_name)
@@ -17,7 +22,7 @@ def parse_fasta(file_name):
             d['meta'] = line
             seqs.append(d)         
         else:      
-            seqs[-1]['seq'].append(line)
-    for s in seqs:
+            seqs[-1]['seq'].append(line.strip())
+    for s in imap(process_seq, seqs):
         yield s
     

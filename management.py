@@ -11,4 +11,4 @@ parser.add_argument('--files', type=str, metavar='Name', nargs='+',
 file_name = parser.parse_args().files[0]
 for seq in parse_file(file_name):
     print 'META INFO ==> %s' % seq['meta']
-    print 'Sequence ==> %s ...' %  seq['seq']
+    print 'Sequence ==> %s' % seq['seq']
