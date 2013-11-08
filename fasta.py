@@ -13,13 +13,12 @@ def process_file(reader):
             yield False, line
             
 def process_seq(s):
-    
     s['seq'] = ifilter(lambda x: x not in EXCLUDE, ''.join(chain(s['seq'])))
     return s
            
 def parse_fasta(file_name):
     reader = read_lines(file_name)
-    seqs = []
+    seqs = list()
     for new_seq, line in process_file(reader):
         if new_seq:
             d = dict(meta=None, seq=list(), errors=list())
