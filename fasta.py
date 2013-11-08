@@ -9,7 +9,7 @@ EXCLUDE = ['#', '@', '*']
 def process_file(reader):
     for line in reader:  
         if ">" in line:
-            yield True, line[1:]
+            yield True, line
         else:
             yield False, line
             
@@ -23,7 +23,7 @@ def parse_fasta(file_name):
     for new_seq, line in process_file(reader):
         if new_seq:
             d = dict(meta=None, seq=list(), errors=list())
-            d['meta'] = line
+            d['meta'] = line[1:]
             seqs.append(d)         
         else:
             try:      
