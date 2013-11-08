@@ -5,13 +5,6 @@ from string import split
 ERRORS = dict(no_meta_info='No Meta Info Found', no_sequence='No Sequence Info Found')
 EXCLUDE = ('#', '@', '*')
 
-def process_lines(reader):
-    for line in reader:  
-        if ">" in line:
-            yield True, line
-        else:
-            yield False, line
-            
 def filter_sequence(s):
     seq_str = ''.join(chain(s['seq']))
     s['seq'] = ifilter(lambda x: x not in EXCLUDE, seq_str)
