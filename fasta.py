@@ -2,12 +2,13 @@ from utils import read_lines
 from itertools import imap, chain, ifilter
 from collections import namedtuple
 
+
 ERRORS = dict(no_meta_info='No Meta Info Found')
 EXCLUDE = ['#', '@', '*']
 
 def process_file(reader):
     for line in reader:  
-        if line[0] == ">":
+        if ">" in line:
             yield True, line[1:]
         else:
             yield False, line
