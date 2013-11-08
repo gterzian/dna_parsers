@@ -16,7 +16,6 @@ def process_seq(s):
     s['seq'] = ifilter(lambda x: x not in EXCLUDE, ''.join(chain(s['seq'])))
     return s
     
- 
 create_seq_dict = lambda : dict(meta=None, seq=list(), errors=list())
            
 def parse_fasta(file_name):
