@@ -11,8 +11,7 @@ def process_file(reader):
             
 def process_seq(s):
     exclude = ['#', '@', '*']
-    seq = ''.join(chain(s['seq']))
-    s['seq'] = ifilter(lambda x: x not in exclude, seq)
+    s['seq'] = ifilter(lambda x: x not in exclude, ''.join(chain(s['seq'])))
     return s
            
 def parse_fasta(file_name):
