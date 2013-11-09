@@ -34,8 +34,8 @@ def process_sequence(seq):
     
 def parse_fasta(file_name):
     seqs = read_fasta_seqs(file_name)
-    seqs_data = imap(process_sequence, seqs)
-    for clean_seq in imap(filter_sequence, seqs_data):
+    seq_data = imap(process_sequence, seqs)
+    for clean_seq in imap(filter_sequence, seq_data):
         yield clean_seq
            
     
