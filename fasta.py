@@ -1,12 +1,16 @@
-from utils import read_lines, read_fasta_seqs
 from itertools import imap, chain, ifilter
-from string import split
 
 ERRORS = dict(no_meta_info='No Meta Info Found', 
                   no_sequence='No Sequence Info Found', 
                   meta_contains_dna='The Meta Info Seems to Include DNA')
 EXCLUDE = ('#', '@', '*')
 DNA = ('G', 'C', 'A', 'T')
+
+def read_fasta_seqs(file_name):
+    with open(file_name, 'rt') as f: 
+        seqs = f.read().split('>')
+        for sequence in seqs:
+            yield sequence
 
 def filter_sequence(s):
     seq_str = ''.join(chain(s['seq']))
@@ -20,7 +24,9 @@ def filter_sequence(s):
     return s
 
 def process_sequence(seq):
-    lines = split(seq, '\n')
+    lines =  seq.split('\n')
+    if len(lines) == 1:
+        lines = seq.split('\r')
     data = dict(meta=None, seq=list(), errors=list())
     data['meta'] = lines[0]
     data['seq'] = lines[1:]

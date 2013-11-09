@@ -8,8 +8,3 @@ def read_lines(file_name):
             if striped:
                 yield striped
                 
-def read_fasta_seqs(file_name):
-    with open(file_name, 'rt') as f: 
-        seqs = split(f.read(), '>')
-        for sequence in seqs:
-            yield sequence
