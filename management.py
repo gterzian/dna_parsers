@@ -15,7 +15,7 @@ for file_name, parser in parse_files(file_names):
     print 
     print 'FIRST 3 RESULTS FROM %s ==>' % file_name
     print
-    for seq in parser:
+    for seq in islice(parser, 0, 3):
         print 'META INFO ==> %s' % seq['meta']
         print 'Sequence ==> %s(...)' % ''.join(seq['seq'])
         if seq['errors']:

@@ -1,4 +1,4 @@
-from itertools import imap, chain, ifilter
+from itertools import imap
 
 ERRORS = dict(no_meta_info='No Meta Info Found', 
                   no_sequence='No Sequence Info Found', 
@@ -22,7 +22,7 @@ def check_errors(s):
     return s
 
 def check_sequence(s):
-    strange = [char for line in s['seq'] for char in EXCLUDE if char in line]            
+    strange = [char for char in EXCLUDE for line in s['seq'] if char in line]            
     if strange:
         s['errors'].append('unknown characters found: %s' % ', '.join(strange))
     return s
