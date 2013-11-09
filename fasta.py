@@ -1,8 +1,8 @@
-from itertools import imap
+from itertools import imap, chain
 
 ERRORS = dict(no_meta_info='No Meta Info Found', 
                   no_sequence='No Sequence Info Found', 
-                  meta_contains_dna='The Meta Info Seems to Include DNA')
+                  meta_contains_dna='The Meta Info Seems to Include DNA: ')
 EXCLUDE = ('#', '@', '*')
 DNA = ('G', 'C', 'A', 'T')
 
@@ -17,8 +17,9 @@ def check_errors(s):
         s['errors'].append(ERRORS['no_sequence'])
     if not s['meta']:
         s['errors'].append(ERRORS['no_meta_info'])
-    if [i for i in s['meta'] if i in DNA]:
-        s['errors'].append(ERRORS['meta_contains_dna'])
+    dna = [i for i in s['meta'] if i in DNA]
+    if dna:
+        s['errors'].append(''.join(ERRORS['meta_contains_dna']) + ''.join(dna))
     return s
 
 def check_sequence(s):
