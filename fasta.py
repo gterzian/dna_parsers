@@ -34,7 +34,7 @@ def process_sequence(seq):
         lines = seq.split('\r')
     data = dict(meta=None, seq=list(), errors=list())
     data['meta'] = lines[0]
-    data['seq'] = lines[1:]
+    data['seq'] = [l for l in lines[1:] if l]#remove empty lines
     return data
     
 def parse_fasta(file_name):
