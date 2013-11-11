@@ -1,4 +1,4 @@
-from itertools import imap, chain
+from itertools import imap
 
 ERRORS = dict(no_meta_info='No Meta Info Found', 
                   no_sequence='No Sequence Info Found', 

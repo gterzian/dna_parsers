@@ -13,12 +13,12 @@ file_names = arg_parser.parse_args().files
 
 for file_name, parser in parse_files(file_names):
     print 
-    print 'FIRST 3 RESULTS FROM %s ==>' % file_name
+    print 'FIRST 5 RESULTS FROM %s ==>' % file_name
     print
     for seq in islice(parser, 0, 5):
         print 'META INFO ==> %s' % seq['meta']
-        print 'Sequence ==> %s(...)' % ''.join(islice(seq['seq'],0,1))
+        print 'Sequence ==> %s(%s more lines)' % (''.join(islice(seq['seq'],0,5)), len(list(seq['seq'])[5:]))
         if seq['errors']:
             print 'PARSING ERRORS ==> %s' % ', '.join(seq['errors'])
         print
-    print "FOUND %s more sequences in %s" % (len(list(parser)[3:]), file_name)
+    print "==> FOUND %s more sequences in %s" % (len(list(parser)[5:]), file_name)
